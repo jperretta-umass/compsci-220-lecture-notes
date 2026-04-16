@@ -1,4 +1,4 @@
-# Async Part 2 and Observer Pattern
+# Async Part 2
 
 ## Warm-Up Exercise
 The implementation of the `http_get` method below is **incorrect**.  
