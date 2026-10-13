@@ -196,11 +196,11 @@ Second, it gets the first value from that iterator.
 Then, until the iterator is out of values, it assigns the current value to the loop variable (i.e., `spam` in the context `for (let spam of container)`), then gets the next value from the iterator.
 
 ### Step 1: Implementing a custom iterator class
-As a first step, let's implement an `ArrayIterator` class that iterates over the values of an array.
+As a first step, let's implement a `DemoArrayIterator` class that iterates over the values of an array.
 ```typescript
 // Similar to in Java, "implements Iterator" tells the type checker to produce an error
 // if our class doesn't conform to the interface definition.
-class ArrayIterator<ValueType> implements Iterator<ValueType> {
+class DemoArrayIterator<ValueType> implements Iterator<ValueType> {
     // Some coding conventions use a leading underscore to distinguish between
     // private vs. public attribute/method names
     // 
@@ -210,7 +210,7 @@ class ArrayIterator<ValueType> implements Iterator<ValueType> {
     //
     // The `Readonly<Type>` "utility type" promises we won't change 
     // any attributes of Type. 
-    // Here, our ArrayIterator class is promising to:
+    // Here, our DemoArrayIterator class is promising to:
     // - Not modify any attributes of the array (i.e., not add or remove elements)
     // - Not modify what any elements of the array refer to (i.e., array[3] = 42)
     // - Not modify any attributes of the objects of type ValueType referred to
@@ -246,7 +246,7 @@ We can now use this iterator to traverse arrays.
 ```typescript
 const items = ["spam", "egg", "sausage", "spam"];
 
-const iterator = new ArrayIterator(items);
+const iterator = new DemoArrayIterator(items);
 let current_result = iterator.next();
 while (!current_result.done) {
     console.log(current_result.value);
@@ -282,7 +282,7 @@ The answer to that question is beyond the scope of this course.
 You can think of it as: The `Iterable` interface requires a special method called `[Symbol.iterator]` (including the square brackets!) that returns an iterator associated with the object to be iterated over.
 
 The `Array` class in JS/TS implements the `Iterable` interface.
-Since the built-in `Array` class has a lot of methods, let's just look at a simple array wrapper class together with our `ArrayIterator` class from before to show how this works.
+Since the built-in `Array` class has a lot of methods, let's just look at a simple array wrapper class together with our `DemoArrayIterator` class from before to show how this works.
 ```typescript
 class DemoArray<ItemType> {
     private _data: ItemType[];
@@ -292,7 +292,7 @@ class DemoArray<ItemType> {
     }
 
     [Symbol.iterator](): Iterator<ItemType> {
-        return new ArrayIterator(this._data);
+        return new DemoArrayIterator(this._data);
     }
 }
 ```
